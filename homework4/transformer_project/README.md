@@ -1,10 +1,10 @@
 # transformer_project
 
-本目录用于在 `main/homework4` 下完成小型 Transformer 本地复现。
+本目录用于完成小型 Transformer 本地复现。
 
 ## 快速开始
 ```bash
-cd main/homework4/transformer_project
+cd homework4/transformer_project
 python train.py
 ```
 
