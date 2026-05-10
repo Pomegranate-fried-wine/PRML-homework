@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import Optional
 
-import torch
 from torch import Tensor, nn
 
 from .attention import MultiHeadAttention
@@ -25,8 +24,9 @@ class PositionwiseFFN(nn.Module):
 
 
 class EncoderLayer(nn.Module):
-    def __init__(self, d_model: int, n_heads: int, d_ff: int, dropout: float = 0.1) -> None:
+    def __init__(self, d_model: int, n_heads: int, d_ff: int, dropout: float = 0.1, use_residual: bool = True) -> None:
         super().__init__()
+        self.use_residual = use_residual
         self.self_attn = MultiHeadAttention(d_model, n_heads, dropout)
         self.ffn = PositionwiseFFN(d_model, d_ff, dropout)
         self.norm1 = nn.LayerNorm(d_model)
@@ -35,17 +35,17 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x: Tensor, src_mask: Optional[Tensor] = None) -> Tensor:
         attn_out, _ = self.self_attn(x, x, x, src_mask)
-        x = self.norm1(x + self.dropout(attn_out))
+        x = self.norm1(x + self.dropout(attn_out)) if self.use_residual else self.norm1(self.dropout(attn_out))
         ffn_out = self.ffn(x)
-        x = self.norm2(x + self.dropout(ffn_out))
+        x = self.norm2(x + self.dropout(ffn_out)) if self.use_residual else self.norm2(self.dropout(ffn_out))
         return x
 
 
 class Encoder(nn.Module):
-    def __init__(self, n_layers: int, d_model: int, n_heads: int, d_ff: int, dropout: float = 0.1) -> None:
+    def __init__(self, n_layers: int, d_model: int, n_heads: int, d_ff: int, dropout: float = 0.1, use_residual: bool = True) -> None:
         super().__init__()
         self.layers = nn.ModuleList(
-            [EncoderLayer(d_model, n_heads, d_ff, dropout) for _ in range(n_layers)]
+            [EncoderLayer(d_model, n_heads, d_ff, dropout, use_residual=use_residual) for _ in range(n_layers)]
         )
 
     def forward(self, x: Tensor, src_mask: Optional[Tensor] = None) -> Tensor:
