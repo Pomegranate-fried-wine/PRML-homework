@@ -8,8 +8,8 @@
    在 Multi30k de→en 翻译任务上，实现并训练 Encoder-Decoder Transformer（多头注意力、FFN、残差、LayerNorm、位置编码、masked decoding）。
 2. **通过实验理解模块必要性**：
    本项目实际完成了两类消融：
-   - 位置编码：`sinusoidal / learned absolute / none`；
-   - ResNet 式残差连接：`residual on / residual off`。
+   - 作业2.1 位置编码：`sinusoidal / learned absolute / none`；
+   - 作业2.3 ResNet 式残差连接：`residual on / residual off`。
 
 ---
 
@@ -21,7 +21,7 @@
 - `utils/dataset.py`：读取本地 Multi30k 数据，构建 `TranslationDataset`，并在 batch 中进行 padding 与张量化。
 - `data/*.de, *.en`：训练/验证/测试平行语料文件。
 
-### 2.2 模型实现（Transformer 核心复现）
+### 2.2 模型实现（Transformer 复现）
 
 - `model/attention.py`：实现 Scaled Dot-Product + Multi-Head Attention，并返回 attention map（用于解释性可视化）。
 - `model/encoder.py`：EncoderLayer/Encoder 堆叠，包含 self-attn + FFN + Add&Norm（残差可开关）。
@@ -74,7 +74,7 @@
 3. **本次数据规模下 learned 略优**：
    `learned` BLEU=0.2532 高于 `sinusoidal` 的 0.2452，可能因为可学习参数更贴合当前语料分布与句长统计。
 
-### 4.4 结论（对应作业问题1）
+### 4.4 结论
 
 **位置编码的核心作用是为 self-attention 提供序列顺序约束，使模型能区分 token 的相对/绝对位置。** 缺失位置编码会使 Transformer 在翻译任务上退化为“弱语序模型”。
 
@@ -86,7 +86,7 @@
 
 论文中的每个子层都采用 Add&Norm（含 residual）。残差通路可稳定深层训练并改善梯度传播。为验证其必要性，本实验对比 residual on/off。
 
-### 5.2 残差消融结果（按你最新日志）
+### 5.2 残差消融结果
 
 | 残差配置 | epoch1 train_loss / acc | epoch10 train_loss / acc | epoch10 val_loss / acc | test BLEU |
 |---|---|---|---|---:|
@@ -136,7 +136,7 @@
 
 ---
 
-## 7. 实验总结与反思（新增）
+## 7. 实验总结与反思
 
 1. **对论文机制的理解从“结构层面”推进到“因果层面”**：
    复现后再做消融，能够明确看到“位置编码/残差”并非经验技巧，而是 Transformer 可用性的必要条件。
@@ -160,4 +160,3 @@
 - 已通过两组消融实验验证模块必要性：
   1. **位置编码是语序建模前提**；
   2. **残差连接是深层训练稳定性的关键**。
-- 实验结果与理论预期一致，支持作业目标：不仅“跑通 Transformer”，更通过对照实验理解其关键设计为何有效。
