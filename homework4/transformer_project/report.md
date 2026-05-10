@@ -5,7 +5,7 @@
 ## 1. 实验设置与环境
 - **数据集**: Multi30k 德英平行语料库 [cite: train.py, dataset.py]。
 - **样本规模**: 训练集 12,000 条，验证集 1,000 条，测试集 1,000 条 [cite: experiment.txt, 消融.txt]。
-- **计算资源**: 本地 NVIDIA GeForce RTX 4060 GPU 加速（通过修复 `torchtext` 兼容性问题实现）。
+- **计算资源**: 本地 NVIDIA GeForce RTX 4060 GPU 加速
 - **训练超参数**: 统一设置为 **10 个 Epoch**，Batch Size 为 64，Adam 优化器学习率为 2e-4 [cite: train.py]。
 
 ---
