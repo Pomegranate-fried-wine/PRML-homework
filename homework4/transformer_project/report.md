@@ -10,7 +10,7 @@
 
 ---
 
-## 2. 问题 1：位置编码 (Positional Encoding) 的核心作用
+## 2. 实验 1：位置编码 (Positional Encoding) 的核心作用
 位置编码为 Transformer 提供序列顺序信息。由于 Self-Attention 机制本质上是位置无关的，若缺失 PE，模型将无法区分词汇的排列顺序 [cite: experiment.txt, report.md]。
 
 ### 2.1 实验结果对比 (10 Epochs)
@@ -26,7 +26,7 @@
 
 ---
 
-## 3. 问题 2：残差连接 (Residual Connection) 的消融研究
+## 3. 实验 2：残差连接 (Residual Connection) 的消融研究
 残差连接（Add & Norm 中的 Add 支路）旨在缓解深层神经网络中的梯度消失问题，确保信息能在多层网络间有效流动 [cite: 消融.txt, report.md]。
 
 ### 3.1 实验结果对比 (10 Epochs)
