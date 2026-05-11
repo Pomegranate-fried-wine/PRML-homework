@@ -77,7 +77,7 @@ Output Tokens
 - Decoder 负责自回归生成目标序列；
 - Cross-Attention 建立源语言与目标语言之间的语义对齐关系。
 
-### Transformer 整体结构图（待补充）
+### 本实验 Transformer 整体结构图
 
 ![Transformer Architecture](figures/transformer_architecture.png)
 
@@ -405,19 +405,13 @@ Residual Connection 的核心作用包括：
 
 ---
 
-## 7.2 Transformer 架构图（待补充）
-
-![Transformer Structure](figures/transformer_architecture_detail.png)
-
----
-
-## 7.3 Position Encoding 可视化（待补充）
+## 7.2 Position Encoding 可视化
 
 ![Positional Encoding Visualization](figures/positional_encoding.png)
 
 ---
 
-## 7.4 Residual ON/OFF 训练曲线
+## 7.3 Residual ON/OFF 训练曲线
 
 ![Residual ON Curves](figures/residual_on_curves.png)
 
@@ -425,7 +419,7 @@ Residual Connection 的核心作用包括：
 
 ---
 
-## 7.5 BLEU 柱状图
+## 7.4 BLEU 柱状图
 
 ![Ablation BLEU](figures/ablation_bleu.png)
 
